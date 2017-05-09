@@ -1,0 +1,4 @@
+
+<<< Try to answer question: "What does my application do?". If you cannot answer in a single sentence, then maybe you can split it into several apps with cleaner logic. >>>
+
+http://stackoverflow.com/a/4879235/4136166
