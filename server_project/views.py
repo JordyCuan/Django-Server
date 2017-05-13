@@ -9,39 +9,37 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 
 
-#def register(request):
-#	return HttpResponse(render(request, 'register.html'))
 
 def register(request):
-    if request.method == 'POST':
+	if request.method == 'POST':
 
-        form = my_forms.UserRegistrationForm(request.POST)
+		form = my_forms.UserRegistrationForm(request.POST)
 
-        if form.is_valid():
-            userObj = form.cleaned_data
-            username = userObj['username']
-            email =  userObj['email']
-            password =  userObj['password']
+		if form.is_valid():
+			userObj = form.cleaned_data
+			username = userObj['username']
+			email =  userObj['email']
+			password =  userObj['password']
 
-            # If the User does not already exists in DB
-            if not (User.objects.filter(username=username).exists() or User.objects.filter(email=email).exists()):
-                
-                # Create the User in DB
-                User.objects.create_user(username, email, password)
-                
-                # Authentication
-                user = authenticate(username = username, password = password)
-                login(request, user)
-                return HttpResponseRedirect('/main')
+			# If the User does not already exists in DB
+			if not (User.objects.filter(username=username).exists() or User.objects.filter(email=email).exists()):
+				
+				# Create the User in DB
+				User.objects.create_user(username, email, password)
+				
+				# Authentication
+				user = authenticate(username = username, password = password)
+				login(request, user)
+				return HttpResponseRedirect('/main')
 
-            # If exists, then error
-            else:
-                raise forms.ValidationError('Username or email already exists')
-    
-    elif request.method == 'GET':
-        form = my_forms.UserRegistrationForm()
+			# If exists, then error
+			else:
+				raise forms.ValidationError('Username or email already exists')
+	
+	elif request.method == 'GET':
+		form = my_forms.UserRegistrationForm()
 
-    return render(request, 'register.html', {'form' : form})
+	return render(request, 'register.html', {'form' : form})
 
 
 
@@ -57,9 +55,9 @@ def main_site(request):
 
 	# https://docs.djangoproject.com/en/1.11/topics/auth/default/#how-to-log-a-user-in
 	#if request.user.is_authenticated:
-	    # Do something for authenticated users.
+		# Do something for authenticated users.
 	#    ...
 	#else:
-	    # Do something for anonymous users.
+		# Do something for anonymous users.
 	#    ...
 
