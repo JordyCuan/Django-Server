@@ -9,7 +9,19 @@ from django.dispatch import receiver
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    objects_models = models.CharField(max_length=100)
+    #objects_models = models.CharField(max_length=100)
+
+class Objects_Models(models.Model):
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+
+    originalname = models.TextField(unique=True)
+    localname = models.TextField()
+    path_and_name = models.TextField()
+    path = models.TextField()
+    encoding = models.TextField()
+    mimetype = models.TextField()
+    size = models.BigIntegerField()
+    updated = models.DateField()
 
 
 @receiver(post_save, sender=User)
