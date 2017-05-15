@@ -52,7 +52,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'server_project.urls'
 
-LOGIN_REDIRECT_URL = '/main'
+LOGIN_REDIRECT_URL = '/'
 
 TEMPLATES = [
     {

@@ -1,8 +1,63 @@
-{% block content %}
-  	<h2>Login</h2>
-  	<form method="post">
-    	{% csrf_token %}
-    	{{ form.as_p }}
-    	<button type="submit">Login</button>
-  	</form>
-{% endblock %}
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <!-- Registro para usar la plataforma -->
+    <title>Decimacion de objetos 3D</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-cookies.js" type="text/javascript"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.js" type="text/javascript"></script>-->
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/signin-singup-style.css' %}">
+
+    <!--<script src="/javascripts/moduleApp.js"></script>        
+    <script src="/javascripts/controllersApp.js"></script>
+    <script src="/javascripts/servicesApp.js"></script>
+    <!-- <script src="/javascripts/factoryInnitSession.js"></script> -->
+
+
+  </head>
+  <body>
+
+    <div class="page-header">
+      <h1>DECIMACION DE OBJETOS 3D</h1>
+    </div>
+
+    <div class="container-fluid" >    
+      <!-- Formulario para iniciar sesion -->
+      <div class="col-md-6" id="sign-in" >
+        <div id="logbox">
+          <form method="post">
+            <h1>Inicio de sesión</h1>
+
+
+            {% csrf_token %}
+            {{ form.as_p }}
+
+
+<!--
+            <input type="email" placeholder="Ingresa tu correo electronico" class="input pass"/>
+            <input type="password" placeholder="Ingresa tu contraseña" required="required" class="input pass"/>-->
+            <button type="submit" class="inputButton">Login</button>
+
+
+
+          </form>
+        </div>
+      </div>
+    </div>
+
+</body>
+</html>
+
+{% verbatim %}
+{% endverbatim %}

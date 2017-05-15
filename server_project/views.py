@@ -30,7 +30,7 @@ def register(request):
 				# Authentication
 				user = authenticate(username = username, password = password)
 				login(request, user)
-				return HttpResponseRedirect('/main')
+				return HttpResponseRedirect('/')
 
 			# If exists, then error
 			else:
