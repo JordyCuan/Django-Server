@@ -1,14 +1,19 @@
-<!DOCTYPE html>
-<html>
-	<head>
-	    <title>Register</title>
-	</head>
+{% extends 'base.html' %}
 
-	<body>
-	    <form method="POST">
-	        {% csrf_token %}
-	        {{ form.as_p }}
-	        <button type="submit">Submit</button>
-	    </form>
-	</body>
-</html>
+{% block content %}
+	<!-- Formulario para el registro -->
+	<div class="col-md-6" id="sign-id">
+		<div id="logbox">
+			<form name="register" id="register">
+				<h1>Register</h1>
+				{% csrf_token %}
+				{{ form.as_p }}
+				<button type="submit" class="inputButton">Submit</button>
+			</form>
+			
+			<div class="text-center">
+				Already registered? <a href="/login" id="login" >Login</a>
+			</div>
+		</div>
+	</div>
+{% endblock %}
