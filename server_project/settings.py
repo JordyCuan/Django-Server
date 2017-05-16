@@ -54,6 +54,10 @@ ROOT_URLCONF = 'server_project.urls'
 
 LOGIN_REDIRECT_URL = '/'
 
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'server_project', 'media')
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

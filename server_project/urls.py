@@ -24,6 +24,7 @@ from server_project import views as my_views
 urlpatterns = [
 
     url(r'^$', my_views.main_site),
+    url(r'^upload/$', my_views.upload_file),
 
     url(r'^login/$', auth_views.LoginView.as_view(), name='login'),
     url(r'^logout/$', auth_views.LogoutView.as_view(), {'next_page': '/login'}, name='logout'),

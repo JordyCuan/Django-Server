@@ -8,6 +8,9 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 
+from server_project import models as my_models
+from django.core.files.storage import FileSystemStorage
+from django.contrib.auth.decorators import login_required
 
 
 def register(request):
@@ -51,7 +54,10 @@ def register(request):
 # @login_required(login_url='/accounts/login/')
 
 def main_site(request):
-	return HttpResponse(render(request, 'main_site.html'))
+
+	form = my_forms.UploadFileForm()	
+
+	return HttpResponse(render(request, 'main_site.html', {'form' : form}))
 
 	# https://docs.djangoproject.com/en/1.11/topics/auth/default/#how-to-log-a-user-in
 	#if request.user.is_authenticated:
@@ -61,3 +67,37 @@ def main_site(request):
 		# Do something for anonymous users.
 	#    ...
 
+
+
+
+@login_required
+def upload_file(request):
+	
+	if request.method == 'POST' and request.FILES['file']:
+
+		form = my_forms.UploadFileForm(request.POST, request.FILES)
+
+		if form.is_valid:
+
+			myfile = request.FILES['file']
+
+			#fs = FileSystemStorage()
+			#filename = fs.save(myfile.name, myfile)
+
+
+			# If you are constructing an object manually, you can simply 
+			# assign the file object from request.FILES to the file 
+			# field in the model
+			# https://docs.djangoproject.com/en/1.11/topics/http/file-uploads/#handling-uploaded-files-with-a-model
+			user_file = my_models.User_File.objects.create(
+								user=request.user,
+								modelo=myfile,
+								localname=myfile.name,
+								size=myfile.size,
+			)
+
+			user_file.save()
+
+
+    
+	return HttpResponseRedirect('/')

@@ -12,11 +12,24 @@
 		    <p>welcome {{ user.username }}</p>
 		    <p><a href="/logout">Logout</a></p>
 
+
+		    <form method="POST" action="/upload/" enctype="multipart/form-data">
+				{% csrf_token %}
+				{{ form.as_p }}		    	
+				<button type="submit" class="inputButton">Submit</button>
+		    </form>
+
+
+
+
 	    {% else %}
 
 		    <p><a href="/login">Login</a></p>
 		    <p><a href="/register">Register</a></p>
 		    
 	    {% endif %}
+
+
+
 	</body>
 </html>
