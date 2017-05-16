@@ -27,7 +27,7 @@ urlpatterns = [
     url(r'^upload/$', my_views.upload_file),
 
     url(r'^login/$', auth_views.LoginView.as_view(), name='login'),
-    url(r'^logout/$', auth_views.LogoutView.as_view(), {'next_page': '/login'}, name='logout'),
+    url(r'^logout/$', auth_views.LogoutView.as_view(), {'next_page': 'home'}, name='logout'),
     
     url(r'^admin/', admin.site.urls),
 

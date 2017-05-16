@@ -1,0 +1,106 @@
+
+
+<!doctype html>
+<html >
+
+  <body>
+
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand navbar-brand-centered" href="#">DECIMATION</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="/signout" ng-click="logout()"><span class="glyphicon glyphicon-log-in"></span> Salir</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+    <div class="container">
+      <div class="row well ">
+
+      <!-- Se muestran las listas de los obj y barra buscar -->
+        <div class="col-md-3">
+          <h4>Lista de archivos OBJ</h4>
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Buscar" ng-model="selected" uib-typeahead="objs._originalname for objs in objs | filter:$viewValue | limitTo:8"  />
+            <span class="input-group-btn">
+                <button class="btn btn-info" type="button">
+                    <i class="glyphicon glyphicon-search"></i>
+                </button>
+            </span>
+          </div>
+          <select multiple class="form-control" ng-model="selectedObj">
+                <option ng-repeat="objs in objs" >{{objs._originalname}}</option>
+          </select>
+        </div> <!-- END class="col-md-3 -->
+
+        <div class="col-md-6 ">
+        <h4></h4>
+          <!-- Grupo para subir archivo -->
+          <div class="form-group">
+            <form class="form-inline" method="POST" enctype="multipart/form-data" name="fileinfo" >
+              <div class="form-group">          
+                <label class="control-label">Elige un archivo obj</label>
+                <input type="file" class="filestyle" name="obj" id="obj" ng-model="obj" onchange="angular.element(this).scope().renderFile(this.files)">
+              </div>
+            </form>
+
+          </div> <!-- END subir archivo -->
+
+        
+
+        <!-- DEcimacion de obj -->
+          <div class="input-group">
+            <label class="control-label">Porcentaje de decimación</label>
+            <div class="input-group" id="percentage">
+
+              <input type="text" name="quant[2]" class="form-control input-number" min="1" max="100" ng-model="porcentaje">
+
+              <span class="input-group-btn btn-toolbar">
+                <button type="button" class="btn btn-primary" id="decimate" ng-click="decimate()">Decimar</button>
+              </span>
+            </div>
+          </div> <!-- input group -->
+            
+        </div> <!--  end col-md-6 -->
+
+          <div class="col-md-3">
+          <h4>Avisos</h4>
+            <textarea class="form-control" rows="8" ng-model="msg" id="consola" ng-init="showDataUSer()" disabled ></textarea>
+          </div>
+
+
+
+        <br><br><br>
+
+    </div> <!-- end row -->
+
+    <div class="row well">
+      <div class="container-fluid">
+
+      <div class="col-md-5 col-md-offset-1">
+        <h4 id="modeloOrig">Modelo Original</h4>
+        <div  render-obj-prev id="renderPrev"></div>
+      </div>
+      <div class="col-md-5 col-md-offset-1">
+        <h4 id="modeloDec">Modelo Decimado</h4>
+        <div class="col-md-5 col-md-offset-1" render-obj-post id="renderPost"></div>
+      </div>
+
+      </div>
+    </div>
+
+    </div> <!-- en container -->
+
+
+  </body>
+</html>

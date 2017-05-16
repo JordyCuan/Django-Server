@@ -13,21 +13,13 @@ from django.dispatch import receiver
 
 
 def user_directory_path(instance, filename):
-    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
-    print "** LLAMADO AL GUARDADO **"
+    # file will be uploaded to MEDIA_ROOT/user_<id>_<username>/<filename>
     return 'user_{0}_{1}/{2}'.format(instance.user.id, instance.user.username, filename)
 
 class User_File(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     modelo = models.FileField(upload_to=user_directory_path)
-
-    #originalname = models.TextField(unique=True)
-    localname = models.TextField()
-    #path_and_name = models.TextField()
-    #path = models.TextField()
-    #encoding = models.TextField()
-    #mimetype = models.TextField()
     size = models.BigIntegerField()
     updated = models.DateField(auto_now_add=True)
 

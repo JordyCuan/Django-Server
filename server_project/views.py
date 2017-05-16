@@ -53,11 +53,15 @@ def register(request):
 # @login_required
 # @login_required(login_url='/accounts/login/')
 
+@login_required(login_url='/login/')
 def main_site(request):
 
-	form = my_forms.UploadFileForm()	
+	form = my_forms.UploadFileForm()
 
-	return HttpResponse(render(request, 'main_site.html', {'form' : form}))
+	files = [ f.modelo.name.split('/')[-1] for f in request.user.user_file_set.all() ]
+
+	context = {'form' : form, 'files' : files }
+	return HttpResponse(render(request, 'main_site.html', context))
 
 	# https://docs.djangoproject.com/en/1.11/topics/auth/default/#how-to-log-a-user-in
 	#if request.user.is_authenticated:
@@ -82,7 +86,7 @@ def upload_file(request):
 			myfile = request.FILES['file']
 
 			#fs = FileSystemStorage()
-			#filename = fs.save(myfile.name, myfile)
+			#filename = fs.generate_filename(myfile.name)
 
 
 			# If you are constructing an object manually, you can simply 
@@ -92,12 +96,9 @@ def upload_file(request):
 			user_file = my_models.User_File.objects.create(
 								user=request.user,
 								modelo=myfile,
-								localname=myfile.name,
 								size=myfile.size,
 			)
 
 			user_file.save()
 
-
-    
 	return HttpResponseRedirect('/')
