@@ -2,6 +2,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
+from django.conf import settings
 
 from server_project import forms as my_forms
 from django import forms
@@ -12,6 +13,7 @@ from server_project import models as my_models
 from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.decorators import login_required
 
+import os
 
 def register(request):
 	if request.method == 'POST':
@@ -74,7 +76,7 @@ def main_site(request):
 
 
 
-@login_required
+@login_required(login_url='/login/')
 def upload_file(request):
 	
 	if request.method == 'POST' and request.FILES['file']:
@@ -84,9 +86,6 @@ def upload_file(request):
 		if form.is_valid:
 
 			myfile = request.FILES['file']
-
-			#fs = FileSystemStorage()
-			#filename = fs.generate_filename(myfile.name)
 
 
 			# If you are constructing an object manually, you can simply 
@@ -102,3 +101,31 @@ def upload_file(request):
 			user_file.save()
 
 	return HttpResponseRedirect('/')
+
+
+
+
+
+@login_required(login_url='/login/')
+def download(request,file_name):
+	user_folder = 'user_{0}_{1}/{2}'.format(request.user.id, request.user.username, file_name)
+	file_path = os.path.join(settings.MEDIA_ROOT, user_folder)
+	
+	
+	file_wrapper = FileWrapper(file(file_path,'rb'))
+	file_mimetype = mimetypes.guess_type(file_path)
+
+	response = HttpResponse(file_wrapper, content_type=file_mimetype )
+	response['X-Sendfile'] = file_path
+	response['Content-Length'] = os.stat(file_path).st_size
+	response['Content-Disposition'] = 'attachment; filename=%s' % smart_str(file_name) 
+
+	return response
+
+
+	if os.path.exists(file_path):
+		with open(file_path, 'rb') as fh:
+			response = HttpResponse(fh.read(), content_type="application/vnd.ms-excel")
+			response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
+			return response
+	raise Http404
